@@ -1,8 +1,6 @@
 library(TSA)
 library(tseries)
 
-sunspot.year
-
 data <- Nile
 diffNile <- diff(data, differences=1)
 adf.test(data)
@@ -10,9 +8,11 @@ adf.test(diffNile)
 
 ss <- sunspot.year
 ss <- ss[time(ss) >= 1871 & time(ss) <= 1970]
-ss
-plot(log(ss), type = "lp")
+plot(ss, type = "l")
+plot(log(ss), type = "l")
+adf.test(ss)
 adf.test(log(ss))
+
 # ACF
 acfval <- acf(diff, lag.max = 100)
 acfval
