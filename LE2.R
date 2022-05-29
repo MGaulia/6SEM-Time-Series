@@ -1,22 +1,27 @@
 library(TSA)
 library(tseries)
-library(tidyverse)
-library(tseries)
 
-data <- read.csv("AAPL.csv")
-data$adjPrice <- ( data$adjOpen + data$adjClose ) / 2
-data <- data %>% select (c("date","adjVolume","adjPrice"))
-data$date <- as.Date(data$date )
+sunspot.year
 
-plot(data$adjPrice, type = "l")
+data <- Nile
+diffNile <- diff(data, differences=1)
+adf.test(data)
+adf.test(diffNile)
+
+ss <- sunspot.year
+ss <- ss[time(ss) >= 1871 & time(ss) <= 1970]
+ss
+plot(log(ss), type = "lp")
+adf.test(log(ss))
 # ACF
-acf(data$adjPrice, lag.max = 31)
+acfval <- acf(diff, lag.max = 100)
+acfval
 # PACF
-pacf(data$adjPrice, lag.max = 31)
+pacfval <- pacf(diff, lag.max = 100)
+pacfval
 # CCF
-ccf(data$adjVolume, data$adjPrice, lag.max = 31)
+ccfval <- ccf(c(data), ss, lag.max = 10, main = "CCF")
+ccfval
 # EACF
-eacf(data$adjPrice, ar.max = 31, ma.max = 31)
+eacf(diffNile, 5, 5)
 
-a <- arima(data$adjPrice, order = c(1, 5, 1))
-predict(a)
